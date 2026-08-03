@@ -1,15 +1,16 @@
 name: Build repository
 
 on:
-  push:
-    branches: [main]
+  workflow_dispatch:
+  issues:
+    types: [opened]
 
 permissions:
   contents: write
 
 jobs:
   build:
-    if: github.actor != 'github-actions[bot]'
+    if: github.event_name == 'workflow_dispatch' || github.event.issue.title == 'Build repository'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
